@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        ul li {
+            list-style-type: none;
+        }
+        #dd {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #dd img {
+            width: 100px;
+        }
+        #dd li {
+            display: flex;
+            flex-direction: column;
+            width: 350px;
+            border: 1px solid red;
+            padding: 20px;
+            align-items: center;
+        }
+        .delete-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .vasu{
+            display:flex;
+            flex-wrap:wrap;
+            align-items: center;
+            justify-content: center;
+            margin:30px;
+            gap:20px;
+        }
+    </style>
+</head>
+<body>
+   <div class="vasu">
+    <button onclick="sortByAsc()">SortByAsc</button>
+    <button onclick="sortByDsc()">SortByDsc</button>
+   </div>
+    <ul id="dd"></ul>
+    
+    <script>
+        let products = [];
+
+        const genUI = (data) => {
+            const dd = document.getElementById('dd');
+            dd.innerHTML = '';
+            data.forEach((p, index) => {
+                let newLi = document.createElement('li');
+                newLi.innerHTML = p.title;
+                let newImg = document.createElement('img');
+                newImg.src = p.image;
+                newLi.appendChild(newImg);
+                let newPrice = document.createElement('h3');
+                newPrice.innerHTML = `$${p.price}`;
+                newLi.appendChild(newPrice);
+                
+                // Create delete button
+                let deleteBtn = document.createElement('button');
+                deleteBtn.innerHTML = 'Delete';
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.onclick = () => deleteProduct(index);
+                newLi.appendChild(deleteBtn);
+
+                dd.appendChild(newLi);
+            });
+        };
+
+        const fetchData = async () => {
+            let res = await fetch("https://fakestoreapi.com/products");
+            let data = await res.json();
+            products = data;
+            genUI(products);
+        };
+
+        fetchData();
+
+        function sortByAsc() {
+            let sortedProducts = [...products].sort((a, b) => a.price - b.price);
+            genUI(sortedProducts);
+        }
+
+        function sortByDsc() {
+            let sortedProducts = [...products].sort((a, b) => b.price - a.price);
+            genUI(sortedProducts);
+        }
+
+        function deleteProduct(index) {
+            products.splice(index, 1);
+            genUI(products);
+        }
+    </script>
+</body>
+</html>
