@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li>sreenivas</li>
+        <li>hemanth</li>
+        <li>rishi</li>
+    </ul>
+    <ul id="dd"></ul>
+    <script>
+        let names = ['sreenivas','rishi','sree','ravi','vasu']
+        function displayName(){
+            names.forEach((name,i) => {
+            let newLi = document.createElement('li')
+            newLi.innerHTML = name
+            let newBtn = document.createElement('button')
+            newBtn.innerHTML = 'delete'
+            newBtn.onclick = function(){
+                deleteBtn(i)
+            }
+            newLi.appendChild(newBtn)
+            document.getElementById('dd').appendChild(newLi)
+        })
+        }
+        displayName()
+
+        function deleteBtn(i){
+            document.getElementById('dd').innerHTML = ''
+            names.splice(i,1)
+            displayName()
+        }
+    </script>
+</body>
+</html>

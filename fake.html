@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        #dd li{
+            list-style-type: none;
+            display: flex;
+            flex-direction: column;
+            width:350px;
+            border:1px solid grey;
+            justify-content: space-between;
+            align-items: center;
+            padding:10px;
+            border-radius:10px;
+        }
+        #dd {
+            display:flex;
+            flex-wrap:wrap;
+            gap:10px;
+            margin:10px;
+           
+        }
+    </style>
+</head>
+<body>
+    <h1>hii fake</h1>
+    <ul id="dd"></ul>
+    <script>
+        const API = async () => {
+            let res = await fetch('https://fakestoreapi.com/products')
+            let data = await res.json()
+            data.forEach((p,i) => {
+                let newLi = document.createElement('li')
+                newLi.innerHTML = p.title
+                let newImg = document.createElement('img')
+                newImg.style.width = '100px'
+                newImg.src = p.image
+                newLi.appendChild(newImg)
+                let newH4 = document.createElement('h4')
+                newH4.innerHTML = p.price
+                newLi.appendChild(newH4)
+                document.getElementById('dd').appendChild(newLi)
+            })
+            console.log(data)
+            return data
+        }
+        API()
+    </script>
+</body>
+</html>
